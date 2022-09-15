@@ -11,7 +11,7 @@ makedocs(;
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
         canonical="https://jake484.github.io/Ai4EMetaPSE.jl",
-        edit_link="master",
+        edit_link="main",
         assets=String[],
     ),
     pages=[
@@ -21,5 +21,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/jake484/Ai4EMetaPSE.jl",
-    devbranch="master",
+    devbranch="main",
 )
