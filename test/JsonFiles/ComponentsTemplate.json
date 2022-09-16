@@ -1,6 +1,6 @@
 {
     "name": "Name",
-    "components-include":[],
+    "componentsInclude":[],
     "varibles":[],
     "parameters": [],
     "equations": [],

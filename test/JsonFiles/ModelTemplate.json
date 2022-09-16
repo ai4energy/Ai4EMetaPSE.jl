@@ -1,8 +1,10 @@
 {
     "name": "Project Name",
     "model": 0,
-    "components-include":[],
+    "componentsInclude":[],
     "components":[],
     "connections": [],
-    "u0": []
+    "u0": [],
+    "timespan":[],
+    "solver": "Rosenbrock23"
 }
