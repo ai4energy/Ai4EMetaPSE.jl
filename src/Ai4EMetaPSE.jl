@@ -8,7 +8,7 @@ include("jsonStruct.jl")
 include("solution.jl")
 # Write your package code here.
 
-export CommonTemplate,readjson
+export readjson
 
 end
 

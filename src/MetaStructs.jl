@@ -23,8 +23,8 @@ for (structName, datatype) in MetaStructs
     s = quote
         struct $structName <: MetaModel
             $(earseMeta(structName))::$(datatype)
-            $(structName)() = new($(matchType(datatype)))
         end
+        $(structName)() = $(structName)($(matchType(datatype)))
     end
     eval(s)
 end

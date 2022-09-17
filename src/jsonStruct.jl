@@ -11,13 +11,14 @@ macro genJsonStruct(name, dic)
             $(ex)
         end
         StructTypes.StructType(::Type{$(name)}) = StructTypes.Mutable()
+        export $name
     end)
 end
 
 include("jsonStructs/CommonJson.jl")
 
 
-function readjson(io::String, s::jsonModel)
+function readjson(io::String, s::jsonModel = CommonJson())
     str = read(io, String)
     return JSON3.read!(str, s)
 end
