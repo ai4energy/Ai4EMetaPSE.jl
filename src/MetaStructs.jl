@@ -29,17 +29,26 @@ for (structName, datatype) in MetaStructs
     eval(s)
 end
 
+function structTypes(datatype::DataType)
+    if datatype <: Vector
+        return :ArrayType
+    elseif datatype <: String
+        return :StringType
+    elseif datatype <: Number
+        return :NumberType
+    else
+        return :NullType
+    end
+end
 
 for (structName, datatype) in MetaStructs
     s = quote
-        struct $structName <: MetaModel
-            $(Symbol(lowercase(string(structName)[5:end])))::$(datatype)
-            $(structName)() = new($(datatype <: Vector ? datatype() : (datatype <: String ? "" : datatype(0))))
-        end
+        StructTypes.StructType(::Type{$(structName)}) = StructTypes.$(structTypes(datatype))()
     end
     eval(s)
 end
 
-# StructTypes.StructType(::Type{CommonTemplate}) = StructTypes.Mutable()
+
+# 
 # StructTypes.StructType(::Type{ModelTemplate}) = StructTypes.Mutable()
 # StructTypes.StructType(::Type{ComponentsTemplate}) = StructTypes.Mutable()

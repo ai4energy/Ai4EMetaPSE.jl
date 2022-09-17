@@ -10,18 +10,17 @@ macro genJsonStruct(name, dic)
         Base.@kwdef mutable struct $name <: jsonModel
             $(ex)
         end
+        StructTypes.StructType(::Type{$(name)}) = StructTypes.Mutable()
     end)
 end
 
 include("jsonStructs/CommonJson.jl")
 
 
-
-
-# function readjson(io::String, s::jsonModel=CommonTemplate())
-#     str = read(io, String)
-#     return JSON3.read!(str, s)
-# end
+function readjson(io::String, s::jsonModel)
+    str = read(io, String)
+    return JSON3.read!(str, s)
+end
 
 # function pretreatment end
 
