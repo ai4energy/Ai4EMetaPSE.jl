@@ -1,4 +1,4 @@
-commonjson = Dict([
+@genJsonStruct CommonJson Dict{Symbol,Symbol}([
     :name => :MetaName
     :variables => :MetaEquations
     :parameters => :MetaVariables

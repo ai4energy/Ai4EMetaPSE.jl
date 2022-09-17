@@ -1,0 +1,1 @@
+@test Ai4EMetaPSE.earseMeta(:MetaStruct) == :struct
