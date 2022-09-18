@@ -12,8 +12,7 @@ function (f::T where {T<:Union{MetaVariables,MetaParameters}})(solution::MetaSol
     if T <: MetaVariables
         push!(blocks.args, :(t))
     end
-    structs = getproperty(solution.jm, sym)
-    for s in getproperty(structs, sym)
+    for s in getproperty(f, sym)
         push!(blocks.args, Meta.parse(s))
     end
     push!(ex.args, blocks)
@@ -21,4 +20,19 @@ function (f::T where {T<:Union{MetaVariables,MetaParameters}})(solution::MetaSol
     return (ex, solution)
 end
 
+function (f::MetaEquations)(solution::MetaSolution)
+    ex = Expr(:block)
+    push!(ex.args, :(der(t) = Differential(t)), :(eqs = []))
+    for s in getproperty(f, :equations)
+        s = replace(s, "=" => "~")
+        vect_ex = Expr(:vect, Meta.parse(s))
+        push!(ex.args, :(append!(eqs, $(vect_ex))))
+    end
+    push!(solution.script.args, ex)
+    return (ex, solution)
+end
+
+
 process(metastruct::MetaModel, solution::MetaSolution) = (metastruct)(solution)
+
+
