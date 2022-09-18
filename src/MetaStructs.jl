@@ -24,6 +24,7 @@ for (structName, datatype) in MetaStructs
         struct $structName <: MetaModel
             $(earseMeta(structName))::$(datatype)
         end
+        export $structName
         $(structName)() = $(structName)($(matchType(datatype)))
     end
     eval(s)
@@ -47,8 +48,3 @@ for (structName, datatype) in MetaStructs
     end
     eval(s)
 end
-
-
-# 
-# StructTypes.StructType(::Type{ModelTemplate}) = StructTypes.Mutable()
-# StructTypes.StructType(::Type{ComponentsTemplate}) = StructTypes.Mutable()

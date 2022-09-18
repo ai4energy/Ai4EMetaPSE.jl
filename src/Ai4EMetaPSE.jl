@@ -8,7 +8,7 @@ include("jsonStruct.jl")
 include("solution.jl")
 # Write your package code here.
 
-export readjson
+export readjson, MetaSolution
 
 end
 

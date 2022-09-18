@@ -1,8 +1,8 @@
-@genJsonStruct CommonJson Dict{Symbol,Symbol}([
+@genJsonStruct CommonJson Vector{Pair{Symbol,Symbol}}([
     :name => :MetaName
-    :variables => :MetaEquations
-    :parameters => :MetaVariables
-    :equations => :MetaParameters
+    :variables => :MetaVariables
+    :parameters => :MetaParameters
+    :equations => :MetaEquations
     :u0 => :MetaInit
     :timespan => :MetaTimespan
     :solver => :MetaSolver

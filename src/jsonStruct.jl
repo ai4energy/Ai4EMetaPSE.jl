@@ -1,9 +1,9 @@
 abstract type jsonModel end
 
-macro genJsonStruct(name, dic)
+macro genJsonStruct(name, pairs)
     ex = Expr(:block)
-    dic = eval(dic)
-    for (fieldname, metaStruct) in dic
+    pairs = eval(pairs)
+    for (fieldname, metaStruct) in pairs
         push!(ex.args, :($(fieldname)::$(metaStruct) = $(eval(metaStruct)())))
     end
     esc(quote
@@ -23,6 +23,7 @@ function readjson(io::String, s::jsonModel = CommonJson())
     return JSON3.read!(str, s)
 end
 
+
 # function pretreatment end
 
 # function pretreatment(jm::CommonTemplate)
@@ -34,9 +35,17 @@ end
 #     return jm
 # end
 
-# function json2script(io::String)
 
 
-# end
-
+# eval(:(@time begin
+#     x = 1.0
+#     y = 2.0
+# end))
+# dump(:(Dict()))
+# res = :(@time)
+# ex = Expr(:block)
+# push!(ex.args,:(x=1),:(x=2))
+# push!(res.args,ex)
+# eval(res)
+# dump(res)
 
