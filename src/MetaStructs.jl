@@ -2,6 +2,7 @@ abstract type MetaModel end
 
 MetaStructs = Dict{Symbol,DataType}([
     :MetaName => String
+    :MetaPkgs => Vector{String}
     :MetaEquations => Vector{String}
     :MetaVariables => Vector{String}
     :MetaParameters => Vector{String}

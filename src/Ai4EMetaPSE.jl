@@ -6,9 +6,10 @@ using StructTypes
 include("MetaStructs.jl")
 include("jsonStruct.jl")
 include("solution.jl")
+include("generateCode.jl")
 # Write your package code here.
 
-export readjson, MetaSolution
+export readjson, generatecode
 
 end
 

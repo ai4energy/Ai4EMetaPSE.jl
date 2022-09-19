@@ -12,7 +12,11 @@ Examples:
 
 ```json
 {
-    "name": "A test",
+    "name": "Name",
+    "pkgs": [
+        "ModelingToolkit",
+        "DifferentialEquations"
+    ],
     "variables": [
         "x(t) = 1.0",
         "y(t) = 1.0",
