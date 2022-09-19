@@ -1,12 +1,12 @@
-function readjson(io::String, s::jsonModel=CommonJson())
-    str = read(io, String)
+function readjson(io::AbstractString, s::jsonModel)
+    str =  isfile(io) ? read(io, String) : io
     return JSON3.read!(str, s)
 end
 
 ```
 
 ```
-function generatecode(io::String, type::jsonModel; write2File::Union{String,Nothing}=nothing)
+function generatecode(io::AbstractString, type::jsonModel; write2File::Union{String,Nothing}=nothing)
     type = readjson(io, type)
     fields = fieldnames(typeof(type))
     solution = MetaSolution(type)
