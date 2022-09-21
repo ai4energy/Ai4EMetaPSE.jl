@@ -16,5 +16,6 @@ macro genJsonStruct(name, pairs)
 end
 
 include("jsonStructs/CommonJson.jl")
+include("jsonStructs/ModelJson.jl")
 
 

@@ -1,10 +1,42 @@
 {
     "name": "Project Name",
-    "model": 0,
-    "componentsInclude":[],
-    "components":[],
-    "connections": [],
+    "moduleusing": [
+        "IncompressiblePipe"
+    ],
+    "components": [
+        {
+            "name": "high",
+            "type": "Source_P",
+            "args": {
+                "D": 0.15,
+                "z": 25.0
+            }
+        },
+        {
+            "name": "elbow1",
+            "type": "ElbowPipe",
+            "args": {
+                "K": 0.9,
+                "D": 0.15,
+                "zin": 15.0,
+                "zout": 15.0
+            }
+        }
+    ],
+    "connections": [
+        [
+            "high.port",
+            "pipe1.in"
+        ],
+        [
+            "pipe1.out",
+            "elbow1.in"
+        ]
+    ],
     "u0": [],
-    "timespan":[],
+    "timespan": [
+        0,
+        1
+    ],
     "solver": "Rosenbrock23"
 }

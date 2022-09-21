@@ -1,8 +1,44 @@
 {
-    "name": "Name",
-    "componentsInclude":[],
-    "varibles":[],
-    "parameters": [],
-    "equations": [],
-    "components":[]
+    "module": "Name",
+    "components": [
+        {
+            "name": "Pin",
+            "type": "connector",
+            "componentsInclude":[],
+            "varibles":[
+                "v(t) = 1.0",
+                "i(t) = 1.0 [connect = Flow]"
+            ],
+            "parameters": [],
+            "equations": []
+        },
+        {
+            "name": "Ground",
+            "type": "common",
+            "componentsInclude":[
+                "g = Pin()"
+            ],
+            "varibles":[],
+            "parameters": [],
+            "equations": []
+        },
+        {
+            "name": "OnePort",
+            "type": "common",
+            "componentsInclude":[
+                "p = Pin()",
+                "n = Pin()"
+            ],
+            "varibles":[
+                "v(t) = 1.0",
+                "i(t) = 1.0"
+            ],
+            "parameters": [],
+            "equations": [
+                "v = p.v - n.v",
+                "0 = p.i + n.i",
+                "i = p.i"
+            ]
+        }
+    ]
 }
