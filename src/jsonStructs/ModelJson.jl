@@ -1,10 +1,9 @@
-Base.@kwdef mutable struct ModelTemplate <: jsonModel
-    name::String = ""
-    model::Vector{String} = String[]
-    componentsInclude::Vector{String} = String[]
-    components::Vector{String} = String[]
-    connections::Vector{String} = String[]
-    u0::Vector{String} = String[]
-    timespan::Vector{Int} = Int[]
-    solver::String = ""
-end
+@genJsonStruct ModelJson Vector{Pair{Symbol,Symbol}}([
+    :name => :MetaName
+    :moduleusing => :MetaModuleUsing
+    :components => :MetaComponents
+    :connections => :MetaConnections
+    :u0 => :MetaInit
+    :timespan => :MetaTimespan
+    :solver => :MetaSolver
+])

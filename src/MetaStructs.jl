@@ -9,10 +9,13 @@ MetaStructs = Dict{Symbol,DataType}([
     :MetaInit => Vector{String}
     :MetaTimespan => Vector{Float64}
     :MetaSolver => String
+    :MetaModuleUsing => Vector{String}
+    :MetaComponents => Vector{Dict{String,Any}}
+    :MetaConnections => Vector{Vector{String}}
 ])
 
 function matchType(datatype::DataType)
-    return datatype <: Vector ? datatype() : (datatype <: String ? "" : datatype(0))
+    return datatype <: Union{Vector,Dict} ? datatype() : (datatype <: String ? "" : datatype(0))
 end
 
 function earseMeta(structName::Symbol)
@@ -36,6 +39,8 @@ function structTypes(datatype::DataType)
         return :ArrayType
     elseif datatype <: String
         return :StringType
+    elseif datatype <: Dict
+        return :DictType
     elseif datatype <: Number
         return :NumberType
     else
