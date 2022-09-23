@@ -9,7 +9,6 @@ MetaStructs = Dict{Symbol,DataType}([
     :MetaInit => Vector{String}
     :MetaTimespan => Vector{Float64}
     :MetaSolver => String
-    :MetaModuleUsing => Vector{String}
     :MetaComponents => Vector{Dict{String,Any}}
     :MetaConnections => Vector{Vector{String}}
 ])
