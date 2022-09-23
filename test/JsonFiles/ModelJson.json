@@ -1,42 +1,302 @@
 {
     "name": "Project Name",
-    "moduleusing": [
-        "IncompressiblePipe"
+    "pkgs": [
+        "ModelingToolkit",
+        "DifferentialEquations",
+        "Ai4EComponentLib.IncompressiblePipe"
     ],
     "components": [
         {
-            "name": "high",
-            "type": "Source_P",
+            "name": "Pump",
+            "type": "CentrifugalPump",
             "args": {
-                "D": 0.15,
-                "z": 25.0
+                "ω": 5000
             }
         },
         {
-            "name": "elbow1",
-            "type": "ElbowPipe",
+            "name": "A",
+            "type": "Sink_P",
+            "args": {}
+        },
+        {
+            "name": "B",
+            "type": "Sink_P",
+            "args": {}
+        },
+        {
+            "name": "Pipe1",
+            "type": "SimplePipe",
             "args": {
-                "K": 0.9,
-                "D": 0.15,
-                "zin": 15.0,
-                "zout": 15.0
+                "L": 2.0
+            }
+        },
+        {
+            "name": "Pipe2",
+            "type": "SimplePipe",
+            "args": {
+                "L": 7.0
+            }
+        },
+        {
+            "name": "Pipe3",
+            "type": "SimplePipe",
+            "args": {
+                "L": 7.0
+            }
+        },
+        {
+            "name": "Pipe4",
+            "type": "SimplePipe",
+            "args": {
+                "L": 9.0
+            }
+        },
+        {
+            "name": "Pipe5",
+            "type": "SimplePipe",
+            "args": {
+                "L": 5.0
+            }
+        },
+        {
+            "name": "Pipe6",
+            "type": "SimplePipe",
+            "args": {
+                "L": 4.0
+            }
+        },
+        {
+            "name": "Pipe7",
+            "type": "SimplePipe",
+            "args": {
+                "L": 5.0
+            }
+        },
+        {
+            "name": "Pipe8",
+            "type": "SimplePipe",
+            "args": {
+                "L": 1.0
+            }
+        },
+        {
+            "name": "Pipe9",
+            "type": "SimplePipe",
+            "args": {
+                "L": 10.0
+            }
+        },
+        {
+            "name": "Pipe10",
+            "type": "SimplePipe",
+            "args": {
+                "L": 2.0
+            }
+        },
+        {
+            "name": "Pipe11",
+            "type": "SimplePipe",
+            "args": {
+                "L": 2.0
+            }
+        },
+        {
+            "name": "Pipe12",
+            "type": "SimplePipe",
+            "args": {
+                "L": 3.0
+            }
+        },
+        {
+            "name": "Pipe13",
+            "type": "SimplePipe",
+            "args": {
+                "L": 2.0
+            }
+        },
+        {
+            "name": "Pipe14",
+            "type": "SimplePipe",
+            "args": {
+                "L": 1.0
+            }
+        },
+        {
+            "name": "Pipe15",
+            "type": "SimplePipe",
+            "args": {
+                "L": 2.0
+            }
+        },
+        {
+            "name": "Pipe16",
+            "type": "SimplePipe",
+            "args": {
+                "L": 3.0
+            }
+        },
+        {
+            "name": "Pipe17",
+            "type": "SimplePipe",
+            "args": {
+                "L": 6.0
+            }
+        },
+        {
+            "name": "Pipe18",
+            "type": "SimplePipe",
+            "args": {
+                "L": 6.0
+            }
+        },
+        {
+            "name": "Pipe19",
+            "type": "SimplePipe",
+            "args": {
+                "L": 6.0
+            }
+        },
+        {
+            "name": "Pipe20",
+            "type": "SimplePipe",
+            "args": {
+                "L": 1.0
+            }
+        },
+        {
+            "name": "Pipe21",
+            "type": "SimplePipe",
+            "args": {
+                "L": 1.0
+            }
+        },
+        {
+            "name": "Pipe22",
+            "type": "SimplePipe",
+            "args": {
+                "L": 7.0
+            }
+        },
+        {
+            "name": "Pipe23",
+            "type": "SimplePipe",
+            "args": {
+                "L": 3.0
+            }
+        },
+        {
+            "name": "Pipe24",
+            "type": "SimplePipe",
+            "args": {
+                "L": 3.0
+            }
+        },
+        {
+            "name": "Pipe25",
+            "type": "SimplePipe",
+            "args": {
+                "L": 2.0
             }
         }
     ],
     "connections": [
         [
-            "high.port",
-            "pipe1.in"
+            "A.port",
+            "Pump.in"
         ],
         [
-            "pipe1.out",
-            "elbow1.in"
+            "Pump.out",
+            "Pipe1.in"
+        ],
+        [
+            "Pipe1.out",
+            "Pipe2.in",
+            "Pipe5.in"
+        ],
+        [
+            "Pipe2.out",
+            "Pipe3.in",
+            "Pipe6.in"
+        ],
+        [
+            "Pipe3.out",
+            "Pipe4.in",
+            "Pipe7.in"
+        ],
+        [
+            "Pipe4.out",
+            "Pipe10.out",
+            "Pipe14.in"
+        ],
+        [
+            "Pipe5.out",
+            "Pipe11.in",
+            "Pipe12.in"
+        ],
+        [
+            "Pipe6.out",
+            "Pipe8.in",
+            "Pipe9.in"
+        ],
+        [
+            "Pipe7.out",
+            "Pipe9.out",
+            "Pipe10.in"
+        ],
+        [
+            "Pipe12.out",
+            "Pipe8.out",
+            "Pipe13.in"
+        ],
+        [
+            "Pipe13.out",
+            "Pipe14.out",
+            "Pipe15.in"
+        ],
+        [
+            "Pipe11.out",
+            "Pipe19.in",
+            "Pipe16.in"
+        ],
+        [
+            "Pipe16.out",
+            "Pipe17.in",
+            "Pipe20.in"
+        ],
+        [
+            "Pipe17.out",
+            "Pipe18.in",
+            "Pipe21.in"
+        ],
+        [
+            "Pipe18.out",
+            "Pipe15.out",
+            "Pipe22.in"
+        ],
+        [
+            "Pipe19.out",
+            "Pipe20.out",
+            "Pipe23.in"
+        ],
+        [
+            "Pipe21.out",
+            "Pipe22.out",
+            "Pipe24.in"
+        ],
+        [
+            "Pipe23.out",
+            "Pipe24.out",
+            "Pipe25.in"
+        ],
+        [
+            "B.port",
+            "Pipe25.out"
         ]
     ],
     "u0": [],
     "timespan": [
         0,
-        1
+        0
     ],
     "solver": "Rosenbrock23"
 }

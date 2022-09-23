@@ -1,5 +1,5 @@
 function readjson(io::AbstractString, s::jsonModel)
-    str =  isfile(io) ? read(io, String) : io
+    str = isfile(io) ? read(io, String) : io
     return JSON3.read!(str, s)
 end
 

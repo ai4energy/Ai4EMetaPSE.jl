@@ -1,6 +1,8 @@
 using Ai4EMetaPSE
 using Test
 
+
+
 @testset "solution funcs" begin
     file = joinpath(@__DIR__, "JsonFiles\\CommonJson.json")
     solution = MetaSolution(readjson(file, CommonJson()))
@@ -48,5 +50,11 @@ end
     "solver": "Rosenbrock23"
 }"""
     solution = generatecode(str, CommonJson(); write2File="s.jl")
+    @test true
+end
+
+@testset "ModelJson write" begin
+    file = joinpath(@__DIR__, "JsonFiles\\ModelJson.json")
+    solution = generatecode(file, ModelJson(); write2File="s.jl")
     @test true
 end

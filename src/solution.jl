@@ -6,6 +6,8 @@ end
 
 export MetaSolution
 
+getpro(f::MetaModel) = getproperty(f, earseMeta(Symbol(typeof(f))))
+
 function (f::T where {T<:Union{MetaVariables,MetaParameters}})(solution::MetaSolution)
     T = typeof(f)
     sym = earseMeta(Symbol(T))
@@ -34,31 +36,36 @@ function (f::MetaEquations)(solution::MetaSolution)
     return (ex, solution)
 end
 
-function (f::MetaName)(::MetaSolution)
+function (f::MetaName)(::Union{MetaSolution,jsonModel})
     s = replace(getproperty(f, :name), " " => "_")
     return Symbol(s)
 end
 
+function earseSubModule(modulename::String)
+    ind = findfirst('.', modulename)
+    return isnothing(ind) ? modulename : modulename[1:ind-1]
+end
+
 function (f::MetaPkgs)(solution::MetaSolution)
     usings = Expr(:using)
-    for pkg in getproperty(f, :pkgs)
-        push!(usings.args, Expr(:., Symbol(pkg)))
+    for pkg in getpro(f)
+        push!(usings.args, Expr(:., map(x -> Symbol(x), split(pkg, "."))...))
     end
     ex = quote
         using Pkg
-        pkgNeeds = $(getproperty(f, :pkgs))
+        pkgNeeds = $(map(x -> earseSubModule(x), getpro(f)))
         alreadyGet = keys(Pkg.project().dependencies)
         toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
         isempty(toAdd) ? nothing : Pkg.add(toAdd)
         $(usings)
     end
-    push!(solution.script.args, ex)
+    push!(solution.script.args, ex.args...)
     return (ex, solution)
 end
 
 function (f::MetaInit)(solution::MetaSolution)
     ex = :(Dict())
-    for s in getproperty(f, :init)
+    for s in getpro(f)
         push!(ex.args, Meta.parse(s))
     end
     ex = Expr(:(=), :init, ex)
@@ -74,11 +81,47 @@ function (f::MetaTimespan)(solution::MetaSolution)
     return (ex, solution)
 end
 
-function (f::MetaSolver)(solution::MetaSolution)
+function solversExpr(f::MetaSolver, jm::CommonJson)
     ex = :(ODEProblem(structural_simplify(ODESystem(eqs, t; name=:Model)), init, timespan))
     ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
-    name = solution.jm.name
-    ex = Expr(:(=), name(solution), ex)
+    name = jm.name
+    return Expr(:(=), name(jm), ex)
+end
+
+function solversExpr(f::MetaSolver, jm::ModelJson)
+    ex = :(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name=:Model), components; name=:system)), init, timespan))
+    ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
+    name = jm.name
+    return Expr(:(=), name(jm), ex)
+end
+
+function (f::MetaSolver)(solution::MetaSolution)
+    ex = solversExpr(f, solution.jm)
+    push!(solution.script.args, ex)
+    return (ex, solution)
+end
+
+function (f::MetaComponents)(solution::MetaSolution)
+    ex = Expr(:block)
+    cps = Expr(:vect)
+    for conponent in getpro(f)
+        sym_name = Symbol(getindex(conponent, "name"))
+        sym_type = Symbol(getindex(conponent, "type"))
+        sym_args = [Expr(:(kw), Symbol(key), value) for (key, value) in getindex(conponent, "args")]
+        push!(ex.args, :(@named $(sym_name) = $(sym_type)($(sym_args...))))
+        push!(cps.args, sym_name)
+    end
+    cps = Expr(:(=), :components, cps)
+    push!(solution.script.args, ex.args..., cps)
+    return (ex, solution)
+end
+
+function (f::MetaConnections)(solution::MetaSolution)
+    ex = :([])
+    for connection in getproperty(f, :connections)
+        push!(ex.args, Expr(:call, :connect, map(x -> Meta.parse(x), connection)...))
+    end
+    ex = Expr(:(=), :eqs, ex)
     push!(solution.script.args, ex)
     return (ex, solution)
 end
