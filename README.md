@@ -13,6 +13,10 @@ using Pkg
 Pkg.add("Ai4EMetaPSE")
 ```
 
+## Document
+
+see more infomation in [docs](https://ai4energy.github.io/Ai4EMetaPSE.jl/dev/)
+
 ## Example
 
 **JSON File**:
