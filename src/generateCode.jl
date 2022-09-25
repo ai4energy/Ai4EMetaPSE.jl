@@ -13,6 +13,6 @@ function generatecode(io::AbstractString, type::jsonModel; write2File::Union{Str
     for field in fields
         process(getproperty(solution.jm, field), solution)
     end
-    isnothing(write2File) ? nothing : write(write2File, string(solution.script))
+    isnothing(write2File) ? nothing : write(write2File, join(map(x -> string(x) * '\n', solution.script.args)))
     return solution
 end
