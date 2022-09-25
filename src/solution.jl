@@ -1,3 +1,12 @@
+"""
+$(TYPEDFIELDS)
+
+The solution type.
+
+* `script`: the generated code
+* `jm`: store json file imformation
+
+"""
 mutable struct MetaSolution
     script::Expr
     jm::jsonModel
