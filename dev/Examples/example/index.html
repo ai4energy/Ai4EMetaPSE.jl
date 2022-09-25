@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Examples · Ai4EMetaPSE.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://ai4energy.github.io/Ai4EMetaPSE.jl/Examples/example/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Ai4EMetaPSE.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li class="is-active"><a class="tocitem" href>Examples</a><ul class="internal"><li><a class="tocitem" href="#CommonJson"><span>CommonJson</span></a></li><li><a class="tocitem" href="#ModelJson"><span>ModelJson</span></a></li></ul></li><li><a class="tocitem" href="../../API/api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Examples</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Examples</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/ai4energy/Ai4EMetaPSE.jl/blob/main/docs/src/Examples/example.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Examples"><a class="docs-heading-anchor" href="#Examples">Examples</a><a id="Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Examples" title="Permalink"></a></h1><h2 id="CommonJson"><a class="docs-heading-anchor" href="#CommonJson">CommonJson</a><a id="CommonJson-1"></a><a class="docs-heading-anchor-permalink" href="#CommonJson" title="Permalink"></a></h2><pre><code class="language- hljs">using Ai4EMetaPSE
+str = &quot;&quot;&quot;{
+    &quot;name&quot;: &quot;Name&quot;,
+    &quot;pkgs&quot;: [
+        &quot;ModelingToolkit&quot;,
+        &quot;DifferentialEquations&quot;
+    ],
+    &quot;variables&quot;: [
+        &quot;x(t) = 1.0&quot;,
+        &quot;y(t) = 1.0&quot;,
+        &quot;z(t) = 2.0&quot;
+    ],
+    &quot;parameters&quot;: [
+        &quot;σ = 1.0&quot;,
+        &quot;ρ = 3.0&quot;,
+        &quot;β = 5.0&quot; 
+    ],
+    &quot;equations&quot;: [
+        &quot;der(x) = σ*(y - x)&quot;,
+        &quot;der(y) = x*(ρ - z) - y&quot;,
+        &quot;der(z) = x*y - β*z&quot;
+    ],
+    &quot;u0&quot;: [
+        &quot;x =&gt; 1.0&quot;,
+        &quot;y =&gt; 2.0&quot;,
+        &quot;z =&gt; 3.0&quot;
+    ],
+    &quot;timespan&quot;: [0,1],
+    &quot;solver&quot;: &quot;Rosenbrock23&quot;
+}&quot;&quot;&quot;
+solution = generatecode(str, CommonJson())
+solution.script</code></pre><h2 id="ModelJson"><a class="docs-heading-anchor" href="#ModelJson">ModelJson</a><a id="ModelJson-1"></a><a class="docs-heading-anchor-permalink" href="#ModelJson" title="Permalink"></a></h2><pre><code class="language- hljs">using Ai4EMetaPSE
+str = &quot;&quot;&quot;{
+    &quot;name&quot;: &quot;Project Name&quot;,
+    &quot;pkgs&quot;: [
+        &quot;ModelingToolkit&quot;,
+        &quot;DifferentialEquations&quot;,
+        &quot;Ai4EComponentLib.IncompressiblePipe&quot;
+    ],
+    &quot;components&quot;: [
+        {
+            &quot;name&quot;: &quot;Pump&quot;,
+            &quot;type&quot;: &quot;CentrifugalPump&quot;,
+            &quot;args&quot;: {
+                &quot;ω&quot;: 5000
+            }
+        },
+        {
+            &quot;name&quot;: &quot;A&quot;,
+            &quot;type&quot;: &quot;Sink_P&quot;,
+            &quot;args&quot;: {}
+        },
+        {
+            &quot;name&quot;: &quot;B&quot;,
+            &quot;type&quot;: &quot;Sink_P&quot;,
+            &quot;args&quot;: {}
+        },
+        {
+            &quot;name&quot;: &quot;Pipe1&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe2&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe3&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe4&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 9.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe5&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 5.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe6&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 4.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe7&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 5.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe8&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe9&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 10.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe10&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe11&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe12&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe13&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe14&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe15&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe16&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe17&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe18&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe19&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe20&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe21&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe22&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe23&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe24&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe25&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        }
+    ],
+    &quot;connections&quot;: [
+        [
+            &quot;A.port&quot;,
+            &quot;Pump.in&quot;
+        ],
+        [
+            &quot;Pump.out&quot;,
+            &quot;Pipe1.in&quot;
+        ],
+        [
+            &quot;Pipe1.out&quot;,
+            &quot;Pipe2.in&quot;,
+            &quot;Pipe5.in&quot;
+        ],
+        [
+            &quot;Pipe2.out&quot;,
+            &quot;Pipe3.in&quot;,
+            &quot;Pipe6.in&quot;
+        ],
+        [
+            &quot;Pipe3.out&quot;,
+            &quot;Pipe4.in&quot;,
+            &quot;Pipe7.in&quot;
+        ],
+        [
+            &quot;Pipe4.out&quot;,
+            &quot;Pipe10.out&quot;,
+            &quot;Pipe14.in&quot;
+        ],
+        [
+            &quot;Pipe5.out&quot;,
+            &quot;Pipe11.in&quot;,
+            &quot;Pipe12.in&quot;
+        ],
+        [
+            &quot;Pipe6.out&quot;,
+            &quot;Pipe8.in&quot;,
+            &quot;Pipe9.in&quot;
+        ],
+        [
+            &quot;Pipe7.out&quot;,
+            &quot;Pipe9.out&quot;,
+            &quot;Pipe10.in&quot;
+        ],
+        [
+            &quot;Pipe12.out&quot;,
+            &quot;Pipe8.out&quot;,
+            &quot;Pipe13.in&quot;
+        ],
+        [
+            &quot;Pipe13.out&quot;,
+            &quot;Pipe14.out&quot;,
+            &quot;Pipe15.in&quot;
+        ],
+        [
+            &quot;Pipe11.out&quot;,
+            &quot;Pipe19.in&quot;,
+            &quot;Pipe16.in&quot;
+        ],
+        [
+            &quot;Pipe16.out&quot;,
+            &quot;Pipe17.in&quot;,
+            &quot;Pipe20.in&quot;
+        ],
+        [
+            &quot;Pipe17.out&quot;,
+            &quot;Pipe18.in&quot;,
+            &quot;Pipe21.in&quot;
+        ],
+        [
+            &quot;Pipe18.out&quot;,
+            &quot;Pipe15.out&quot;,
+            &quot;Pipe22.in&quot;
+        ],
+        [
+            &quot;Pipe19.out&quot;,
+            &quot;Pipe20.out&quot;,
+            &quot;Pipe23.in&quot;
+        ],
+        [
+            &quot;Pipe21.out&quot;,
+            &quot;Pipe22.out&quot;,
+            &quot;Pipe24.in&quot;
+        ],
+        [
+            &quot;Pipe23.out&quot;,
+            &quot;Pipe24.out&quot;,
+            &quot;Pipe25.in&quot;
+        ],
+        [
+            &quot;B.port&quot;,
+            &quot;Pipe25.out&quot;
+        ]
+    ],
+    &quot;u0&quot;: [],
+    &quot;timespan&quot;: [
+        0,
+        0
+    ],
+    &quot;solver&quot;: &quot;Rosenbrock23&quot;
+}&quot;&quot;&quot;
+solution = generatecode(str, ModelJson())
+solution.script</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../">« Home</a><a class="docs-footer-nextpage" href="../../API/api/">API »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.23 on <span class="colophon-date" title="Sunday 25 September 2022 09:57">Sunday 25 September 2022</span>. Using Julia version 1.8.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
