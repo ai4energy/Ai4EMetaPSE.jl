@@ -2,6 +2,7 @@ module Ai4EMetaPSE
 
 using JSON3
 using StructTypes
+using DocStringExtensions
 
 include("MetaStructs.jl")
 include("jsonStruct.jl")
