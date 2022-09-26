@@ -2,7 +2,7 @@
 
 ## CommonJson
 
-```@example 1
+```julia
 using Ai4EMetaPSE
 str = """{
     "name": "Name",
@@ -34,12 +34,64 @@ str = """{
     "solver": "Rosenbrock23"
 }"""
 solution = generatecode(str, CommonJson())
-solution.script
+```
+
+The generated codes are:
+
+```julia
+quote
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:64 =#
+    using Pkg
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:65 =#
+    pkgNeeds = ["ModelingToolkit", "DifferentialEquations"]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:66 =#
+    alreadyGet = keys((Pkg.project()).dependencies)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:67 =#
+    toAdd = [package for package = pkgNeeds if package ∉ alreadyGet]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:68 =#
+    if isempty(toAdd)
+        nothing
+    else
+        Pkg.add(toAdd)
+    end
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:69 =#
+    using ModelingToolkit, DifferentialEquations
+    #= none:1 =# @variables begin
+            t
+            x(t) = begin
+                    #= none:1 =#
+                    1.0
+                end
+            y(t) = begin
+                    #= none:1 =#
+                    1.0
+                end
+            z(t) = begin
+                    #= none:1 =#
+                    2.0
+                end
+        end
+    #= none:1 =# @parameters begin
+            σ = 1.0
+            ρ = 3.0
+            β = 5.0
+        end
+    begin
+        der = Differential(t)
+        eqs = []
+        append!(eqs, [der(x) ~ σ * (y - x)])
+        append!(eqs, [der(y) ~ x * (ρ - z) - y])
+        append!(eqs, [der(z) ~ x * y - β * z])
+    end
+    init = Dict(x => 1.0, y => 2.0, z => 3.0)
+    timespan = (0.0, 1.0)
+    Name = solve(ODEProblem(structural_simplify(ODESystem(eqs, t; name = :Model)), init, timespan), Rosenbrock23())
+end
 ```
 
 ## ModelJson
 
-```@example 2
+```julia
 using Ai4EMetaPSE
 str = """{
     "name": "Project Name",
@@ -344,5 +396,60 @@ str = """{
     "solver": "Rosenbrock23"
 }"""
 solution = generatecode(str, ModelJson())
-solution.script
+```
+
+The generated codes are:
+
+```julia
+quote
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:64 =#
+    using Pkg
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:65 =#
+    pkgNeeds = ["ModelingToolkit", "DifferentialEquations", "Ai4EComponentLib"]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:66 =#
+    alreadyGet = keys((Pkg.project()).dependencies)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:67 =#
+    toAdd = [package for package = pkgNeeds if package ∉ alreadyGet]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:68 =#
+    if isempty(toAdd)
+        nothing
+    else
+        Pkg.add(toAdd)
+    end
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:69 =#
+    using ModelingToolkit, DifferentialEquations, Ai4EComponentLib.IncompressiblePipe
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pump = CentrifugalPump(ω = 5000)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named A = Sink_P()
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named B = Sink_P()
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe1 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe2 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe3 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe4 = SimplePipe(L = 9)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe5 = SimplePipe(L = 5)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe6 = SimplePipe(L = 4)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe7 = SimplePipe(L = 5)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe8 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe9 = SimplePipe(L = 10)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe10 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe11 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe12 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe13 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe14 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe15 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe16 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe17 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe18 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe19 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe20 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe21 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe22 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe23 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe24 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe25 = SimplePipe(L = 2)
+    components = [Pump, A, B, Pipe1, Pipe2, Pipe3, Pipe4, Pipe5, Pipe6, Pipe7, Pipe8, Pipe9, Pipe10, Pipe11, Pipe12, Pipe13, Pipe14, Pipe15, Pipe16, Pipe17, Pipe18, Pipe19, Pipe20, Pipe21, Pipe22, Pipe23, Pipe24, Pipe25]
+    eqs = [connect(A.port, Pump.in), connect(Pump.out, Pipe1.in), connect(Pipe1.out, Pipe2.in, Pipe5.in), connect(Pipe2.out, Pipe3.in, Pipe6.in), connect(Pipe3.out, Pipe4.in, Pipe7.in), connect(Pipe4.out, Pipe10.out, Pipe14.in), connect(Pipe5.out, Pipe11.in, Pipe12.in), connect(Pipe6.out, Pipe8.in, Pipe9.in), connect(Pipe7.out, Pipe9.out, Pipe10.in), connect(Pipe12.out, Pipe8.out, Pipe13.in), connect(Pipe13.out, Pipe14.out, Pipe15.in), connect(Pipe11.out, Pipe19.in, Pipe16.in), connect(Pipe16.out, Pipe17.in, Pipe20.in), connect(Pipe17.out, Pipe18.in, Pipe21.in), connect(Pipe18.out, Pipe15.out, Pipe22.in), connect(Pipe19.out, Pipe20.out, Pipe23.in), connect(Pipe21.out, Pipe22.out, Pipe24.in), connect(Pipe23.out, Pipe24.out, Pipe25.in), connect(B.port, Pipe25.out)]
+    init = Dict()
+    timespan = (0.0, 0.0)
+    Project_Name = solve(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name = :Model), components; name = :system)), init, timespan), Rosenbrock23())
+end
 ```

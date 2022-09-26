@@ -1,3 +1,4 @@
 [deps]
 Ai4EMetaPSE = "79c54b7b-7c25-4843-921b-9653a3bc153e"
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
