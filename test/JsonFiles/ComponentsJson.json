@@ -1,6 +1,6 @@
 {
     "module": "Name",
-    "components": [
+    "components2func": [
         {
             "name": "Pin",
             "type": "connector",
