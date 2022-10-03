@@ -1,8 +1,10 @@
-Base.@kwdef mutable struct ComponentsTemplate <: jsonModel
-    name::String = ""
-    componentsInclude::Vector{String} = String[]
-    varibles::Vector{String} = String[]
-    parameters::Vector{String} = String[]
-    equations::Vector{String} = String[]
-    components::Vector{Int} = String[]
-end
+@genJsonStruct ComponentsJson Vector{Pair{Symbol,Symbol}}([
+    :name => :MetaName
+    :args => :MetaArgs
+    :custom_Code => :MetaCustom_Code
+    :components => :MetaComponents
+    :variablesInclude => :MetaVariablesInclude
+    :variables => :MetaVariables
+    :parameters => :MetaParameters
+    :equations => :MetaEquations
+])

@@ -37,11 +37,18 @@ function (f::MetaEquations)(solution::MetaSolution)
     ex = Expr(:block)
     push!(ex.args, :(der = Differential(t)), :(eqs = []))
     for s in getproperty(f, :equations)
-        s = replace(s, "=" => "~")
+        s = replace(s, "=" => "~", count=1)
         vect_ex = Expr(:vect, Meta.parse(s))
         push!(ex.args, :(append!(eqs, $(vect_ex))))
     end
     push!(solution.script.args, ex)
+    if typeof(solution.jm) == ComponentsJson
+        lastex = :(compose(ODESystem(eqs, t, sts, ps; name = name),components))
+        push!(ex.args,lastex)
+        solution.script.args[length(solution.script.args)] = ex
+        push!(func_script.args,solution.script)
+        solution.script = func_script
+    end
     return (ex, solution)
 end
 
@@ -134,6 +141,43 @@ function (f::MetaConnections)(solution::MetaSolution)
     push!(solution.script.args, ex)
     return (ex, solution)
 end
+
+function (f::MetaArgs)(solution::MetaSolution)
+    global func_script = Expr(:function)
+    ex = Expr(:call)
+    name = solution.jm.name(solution.jm)
+    push!(ex.args,name)
+    args = Expr(:parameters,:name)
+    for arg in getproperty(f, :args)
+        push!(args.args,Expr(:kw,map(x -> Meta.parse(x), split(arg, "="))...))
+    end
+    push!(ex.args,args)
+    push!(func_script.args, ex)
+    return (ex, func_script)
+end
+
+function (f::MetaCustom_Code)(solution::MetaSolution)
+    ex = Expr(:block)
+    for code in getproperty(f, :custom_code)
+        push!(ex.args,Meta.parse(code))
+    end
+    push!(solution.script.args, ex)
+    return (ex, solution)
+end
+
+function (f::MetaVariablesInclude)(solution::MetaSolution)
+    ex = Expr(:blocks)
+    for VariablesInclude in getpro(f)
+        var = :(@unpack $(Meta.parse(VariablesInclude)))
+        push!(ex.args, var)
+    end
+    push!(solution.script.args,ex.args...)
+    return (ex, solution)
+end
+
+
+
+
 
 process(metastruct::MetaModel, solution::MetaSolution) = (metastruct)(solution)
 

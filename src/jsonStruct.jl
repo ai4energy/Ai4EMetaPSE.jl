@@ -17,5 +17,6 @@ end
 
 include("jsonStructs/CommonJson.jl")
 include("jsonStructs/ModelJson.jl")
+include("jsonStructs/ComponentsJson.jl")
 
 

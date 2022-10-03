@@ -453,3 +453,125 @@ quote
     Project_Name = solve(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name = :Model), components; name = :system)), init, timespan), Rosenbrock23())
 end
 ```
+
+## ComponentsJson
+
+```julia
+using Ai4EMetaPSE
+str = """{
+    "name":"TransitionPipe",
+    "args":[
+        "λ1=1.0",
+        "λ2=1.0",
+        "λ3=1.0", 
+        "n=10", 
+        "f=0.016", 
+        "D=0.2", 
+        "L=100", 
+        "T=300", 
+        "pins=0.56e6", 
+        "pouts=0.56e6"
+    ], 
+    "custom_Code":[
+        "RT = 287.11 * T",
+        "A0 = pi / 4 * D^2",
+        "c10 = RT / A0",
+        "c20 = c10 * f / 2 / D",
+        "dx=L/n",
+        "qms = sqrt(abs(pins^2 - pouts^2) / (f * L * RT / D / A0 / A0))",
+        "pms = map(i->sqrt(pins^2 * (1 - (i-1) / n) + pouts^2 * (i-1) / n),1:n+1)"
+    ],
+    "components":[
+        {
+            "name": "inlet",
+            "type": "FlowPort",
+            "args": {
+                "T": 300
+            }
+        },
+        {
+            "name": "outlet",
+            "type": "FlowPort",
+            "args": {
+                "T": 300
+            }
+        }
+    ],
+    "variablesInclude":[],
+    "variables": [
+        "qm[1:n](t)=qms",
+        "p[1:n+1](t)=pms"
+    ],
+    "parameters": [
+        "A = A0*λ2",
+        "c1 = c10*λ1",
+        "c2 = c20*λ3",
+        "dx = L / n",
+        "f = f"
+    ],
+    "equations": [
+        "[der(p[i]) = c1 * (qm[i-1] - qm[i]) / dx for i = 2:n]",
+        "[der(qm[i]) = (c1 * qm[i]^2 / (0.5 * (p[i+1] + p[i]))^2 - A) * (p[i+1] - p[i]) / dx + c1 * qm[i] / (0.5 * (p[i+1] + p[i])) * (qm[i-1] - qm[i+1]) / dx - c2 * qm[i] * abs(qm[i]) / (0.5 * (p[i+1] + p[i])) for i = 2:n-1]",
+        "p[1] = inlet.p",
+        "p[n+1] = outlet.p",
+        "qm[n] = -outlet.qm",
+        "qm[1] = inlet.qm",
+        "der(qm[1]) = (c1 * qm[1]^2 / (0.5 * (p[2] + p[1]))^2 - A) * (p[2] - p[1]) / dx + c1 * qm[1] / (0.5 * (p[2] + p[1])) * (3 * qm[1] - 4 * qm[2] + qm[3]) / dx - c2 * qm[1] * abs(qm[1]) / (0.5 * (p[2] + p[1]))",
+        "der(qm[n]) = (c1 * qm[n]^2 / (0.5 * (p[n+1] + p[n]))^2 - A) * (p[n+1] - p[n]) / dx + c1 * qm[n] / (0.5 * (p[n+1] + p[n])) * (-3 * qm[n] + 4 * qm[n-1] - qm[n-2]) / dx - c2 * qm[n] * abs(qm[n]) / (0.5 * (p[n+1] + p[n]))"
+    ]
+}"""
+solution = generatecode(str, ComponentsJson())
+```
+
+The generated codes are:
+
+```julia
+function TransitionPipe(; name, λ1 = 1.0, λ2 = 1.0, λ3 = 1.0, n = 10, f = 0.016, D = 0.2, L = 100, T = 300, pins = 560000.0, pouts = 560000.0)
+    begin
+        RT = 287.11T
+        A0 = (pi / 4) * D ^ 2
+        c10 = RT / A0
+        c20 = ((c10 * f) / 2) / D
+        dx = L / n
+        qms = sqrt(abs(pins ^ 2 - pouts ^ 2) / ((((f * L * RT) / D) / A0) / A0))
+        pms = map((i->begin
+                        #= none:1 =#
+                        sqrt(pins ^ 2 * (1 - (i - 1) / n) + (pouts ^ 2 * (i - 1)) / n)
+                    end), 1:n + 1)
+    end
+    #= c:\Users\A\Desktop\git\Ai4EMetaPSE.jl\src\solution.jl:127 =# @named inlet = FlowPort(T = 300)
+    #= c:\Users\A\Desktop\git\Ai4EMetaPSE.jl\src\solution.jl:127 =# @named outlet = FlowPort(T = 300)
+    components = [inlet, outlet]
+    #= none:1 =# @variables begin
+            t
+            (qm[1:n])(t) = begin
+                    #= none:1 =#
+                    qms
+                end
+            (p[1:n + 1])(t) = begin
+                    #= none:1 =#
+                    pms
+                end
+        end
+    #= none:1 =# @parameters begin
+            A = A0 * λ2
+            c1 = c10 * λ1
+            c2 = c20 * λ3
+            dx = L / n
+            f = f
+        end
+    begin
+        der = Differential(t)
+        eqs = []
+        append!(eqs, [[der(p[i]) ~ (c1 * (qm[i - 1] - qm[i])) / dx for i = 2:n]])
+        append!(eqs, [[der(qm[i]) ~ ((((c1 * qm[i] ^ 2) / (0.5 * (p[i + 1] + p[i])) ^ 2 - A) * (p[i + 1] - p[i])) / dx + (((c1 * qm[i]) / (0.5 * (p[i + 1] + p[i]))) * (qm[i - 1] - qm[i + 1])) / dx) - (c2 * qm[i] * abs(qm[i])) / (0.5 * (p[i + 1] + p[i])) for i = 2:n - 1]])
+        append!(eqs, [p[1] ~ inlet.p])
+        append!(eqs, [p[n + 1] ~ outlet.p])
+        append!(eqs, [qm[n] ~ -(outlet.qm)])
+        append!(eqs, [qm[1] ~ inlet.qm])
+        append!(eqs, [der(qm[1]) ~ ((((c1 * qm[1] ^ 2) / (0.5 * (p[2] + p[1])) ^ 2 - A) * (p[2] - p[1])) / dx + (((c1 * qm[1]) / (0.5 * (p[2] + p[1]))) * ((3 * qm[1] - 4 * qm[2]) + qm[3])) / dx) - (c2 * qm[1] * abs(qm[1])) / (0.5 * (p[2] + p[1]))])
+        append!(eqs, [der(qm[n]) ~ ((((c1 * qm[n] ^ 2) / (0.5 * (p[n + 1] + p[n])) ^ 2 - A) * (p[n + 1] - p[n])) / dx + (((c1 * qm[n]) / (0.5 * (p[n + 1] + p[n]))) * ((-3 * qm[n] + 4 * qm[n - 1]) - qm[n - 2])) / dx) - (c2 * qm[n] * abs(qm[n])) / (0.5 * (p[n + 1] + p[n]))])
+        compose(ODESystem(eqs, t, sts, ps; name = name), components)
+    end
+end
+```

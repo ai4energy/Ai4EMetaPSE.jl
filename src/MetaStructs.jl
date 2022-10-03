@@ -11,6 +11,9 @@ MetaStructs = Dict{Symbol,DataType}([
     :MetaSolver => String
     :MetaComponents => Vector{Dict{String,Any}}
     :MetaConnections => Vector{Vector{String}}
+    :MetaArgs => Vector{String}
+    :MetaCustom_Code => Vector{String}
+    :MetaVariablesInclude => Vector{String}
 ])
 
 function matchType(datatype::DataType)
