@@ -58,3 +58,16 @@ function generatecode(io::AbstractString, type::jsonModel; write2File::Union{Str
     isnothing(write2File) ? nothing : write(write2File, join(map(x -> string(x) * '\n', solution.script.args)))
     return solution
 end
+
+
+"""
+$(TYPEDSIGNATURES)
+
+To `eval` the script in [`MetaSolution`](@ref) type
+
+* `solution`: the result from `generatecode`
+
+"""
+function eval(solution::MetaSolution)
+    return eval(solution.script)
+end
