@@ -10,7 +10,7 @@ include("solution.jl")
 include("generateCode.jl")
 # Write your package code here.
 
-export readjson, generatecode
+export readjson, generatecode, evalSolution
 
 end
 

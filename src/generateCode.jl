@@ -68,6 +68,4 @@ To `eval` the script in [`MetaSolution`](@ref) type
 * `solution`: the result from `generatecode`
 
 """
-function eval(solution::MetaSolution)
-    return eval(solution.script)
-end
+evalSolution(solution::MetaSolution) = eval(solution.script)
