@@ -58,3 +58,14 @@ end
     solution = generatecode(file, ModelJson(); write2File="s.jl")
     @test true
 end
+
+@testset "evalSolution" begin
+    file = joinpath(@__DIR__, "JsonFiles\\ModelJson.json")
+    solution = generatecode(file, ModelJson(); write2File="s.jl")
+    try
+        evalSolution(solution)
+    catch e
+        println(e)
+        @test true
+    end
+end
