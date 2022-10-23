@@ -63,9 +63,20 @@ end
 """
 $(TYPEDSIGNATURES)
 
-To `eval` the script in [`MetaSolution`](@ref) type
+To get the script in [`MetaSolution`](@ref)
 
 * `solution`: the result from `generatecode`
 
 """
-evalSolution(solution::MetaSolution) = eval(solution.script)
+getscript(solution::MetaSolution) = solution.script
+
+"""
+$(TYPEDSIGNATURES)
+
+To `eval` the script in [`MetaSolution`](@ref) at `Main`
+
+* `solution`: the result from `generatecode`
+
+"""
+evalSolution(solution::MetaSolution) = Base.eval(Main, solution.script)
+
