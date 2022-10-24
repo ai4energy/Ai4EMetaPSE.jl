@@ -1,5 +1,10 @@
 function readjson(io::AbstractString, s::jsonModel)
-    str = isfile(io) ? read(io, String) : io
+    # if Sys.islinux()
+    #     str = length(io) < 255 && isfile(io) ? read(io, String) : io
+    # elseif Sys.iswindows()
+    #     str = isfile(io) ? read(io, String) : io
+    # end
+    str = length(io) < 256 && isfile(io) ? read(io, String) : io
     return JSON3.read!(str, s)
 end
 
