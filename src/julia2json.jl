@@ -34,9 +34,9 @@ JSON3.pretty(file, ex)
 ```
 
 ```julia
-ex = \"function f(x)
+ex = :(function f(x)
 x + 1
-end\" |> julia2json
+end) |> julia2json
 JSON3.pretty(file, ex)
 ```
 
@@ -47,7 +47,7 @@ s = @julia2json function f(x)
     x + 1
 end
 JSON3.pretty(file, s)
-
+```
 """
 function julia2json(str::String)
     _julia2josn(Meta.parse(str))
