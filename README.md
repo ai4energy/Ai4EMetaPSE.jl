@@ -5,9 +5,9 @@
 [![Build Status](https://github.com/ai4energy/Ai4EMetaPSE.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/ai4energy/Ai4EMetaPSE.jl/actions/workflows/CI.yml)
 
 Ai4EMetaPSE.jl can parse:
-* a json file that include differential equations and generate julia solution code based on [Sciml Ecosystem](https://sciml.ai/).
 * julia ASTs(abstract syntax tree) to a json file
 * json file to julia AST
+* a json file that include differential equations and generate julia solution code based on [Sciml Ecosystem](https://sciml.ai/).
 
 ## Install
 
