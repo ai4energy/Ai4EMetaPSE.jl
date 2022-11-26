@@ -52,13 +52,13 @@ In `s.json`:
                 {
                     "LINENUMBERNODE": {
                         "line": 11,
-                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                        "file": "e:\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
                     }
                 },
                 {
                     "LINENUMBERNODE": {
                         "line": 12,
-                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                        "file": "e:\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
                     }
                 },
                 {
