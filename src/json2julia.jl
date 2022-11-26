@@ -24,10 +24,3 @@ function json2julia(io::AbstractString)
     return _json2julia(ex)
 end
 
-
-
-# ex = JSON3.read(s, Dict)
-# ext = _json2julia(ex)
-
-# eval(ext)
-

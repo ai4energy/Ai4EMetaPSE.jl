@@ -17,6 +17,38 @@ function _julia2josn(ex::Expr)
     return d
 end
 
+"""
+$(TYPEDSIGNATURES)
+
+julia2json converts a Julia expression to a JSON string.
+
+# Examples:
+
+julia2json accepts a string or an expression.
+
+```julia
+ex = \"function f(x)
+x + 1
+end\" |> julia2json
+JSON3.pretty(file, ex)
+```
+
+```julia
+ex = \"function f(x)
+x + 1
+end\" |> julia2json
+JSON3.pretty(file, ex)
+```
+
+julia2json can also be used as a macro
+
+```julia
+s = @julia2json function f(x)
+    x + 1
+end
+JSON3.pretty(file, s)
+
+"""
 function julia2json(str::String)
     _julia2josn(Meta.parse(str))
 end
@@ -28,22 +60,6 @@ end
 macro julia2json(ex)
     return _julia2josn(ex)
 end
-
-# function SimplePipe(; name, R=100, T=300)
-#     a = true
-#     @named inlet = FlowPort(T=T)
-#     @named outlet = FlowPort(T=T)
-#     sts = @variables T [connect = Flow]
-#     ps = @parameters begin
-#         R = R
-#     end
-#     eqs = [
-#         inlet.p - outlet.p ~ R * inlet.qm * abs(inlet.qm)
-#         inlet.qm + outlet.qm ~ 0
-#     ]
-#     compose(ODESystem(eqs, t, [], ps; name=name), inlet, outlet)
-# end
-
 
 
 

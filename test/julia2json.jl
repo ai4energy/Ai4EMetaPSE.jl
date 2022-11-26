@@ -17,6 +17,19 @@ using Test
     @test eval(ex)(1) == eval(expr)(1)
 end
 
+@testset "@julia2json" begin
+    expr = :(function f(x)
+        x + 1
+    end)
+    file = joinpath(@__DIR__, "JsonFiles/julia2jsonTest1.json")
+    s = @julia2json function f(x)
+        x + 1
+    end
+    JSON3.pretty(file, s)
+    ex = json2julia(file)
+    @test eval(ex)(1) == eval(expr)(1)
+end
+
 @testset "julia2json" begin
     expr = :(function f(x)
         x = x + 1
@@ -54,3 +67,4 @@ end
     ex = json2julia(file)
     @test eval(ex)(1) == eval(expr)(1)
 end
+
