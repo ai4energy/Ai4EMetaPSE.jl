@@ -16,7 +16,10 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "Examples" => "Examples/example.md",
+        "Examples" => [
+            "Examples/example.md"
+            "Examples/julia2json.md"
+            ],
         "API" => "API/api.md"
     ],
 )

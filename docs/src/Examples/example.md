@@ -1,4 +1,4 @@
-# Examples
+# Differential Equations Json Examples
 
 ## CommonJson
 
