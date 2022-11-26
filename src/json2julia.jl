@@ -18,6 +18,19 @@ function _json2julia(d::Dict)
     return Expr(head, args...)
 end
 
+"""
+$(TYPEDSIGNATURES)
+
+json2julia converts a JSON string to a Julia expression.
+
+# Examples:
+
+```julia    
+file = joinpath(@__DIR__, "JsonFiles/julia2jsonTest1.json")
+ex = json2julia(file)
+```
+
+"""
 function json2julia(io::AbstractString)
     str = length(io) < 256 && isfile(io) ? read(io, String) : io
     ex = JSON3.read(str, Dict)
