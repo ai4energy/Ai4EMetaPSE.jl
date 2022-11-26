@@ -1,0 +1,118 @@
+{
+    "args": [
+        {
+            "args": [
+                "f",
+                "x"
+            ],
+            "head": "call"
+        },
+        {
+            "args": [
+                {
+                    "LINENUMBERNODE": {
+                        "line": 40,
+                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                    }
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 41,
+                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        {
+                            "args": [
+                                "+",
+                                "x",
+                                1
+                            ],
+                            "head": "call"
+                        }
+                    ],
+                    "head": "="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 42,
+                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        3
+                    ],
+                    "head": "*="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 43,
+                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        2
+                    ],
+                    "head": "-="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 44,
+                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                    }
+                },
+                {
+                    "args": [
+                        {
+                            "LINENUMBERNODE": {
+                                "line": 45,
+                                "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                            }
+                        },
+                        {
+                            "args": [
+                                "@assert",
+                                {
+                                    "LINENUMBERNODE": {
+                                        "line": 45,
+                                        "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                                    }
+                                },
+                                {
+                                    "args": [
+                                        "isa",
+                                        "x",
+                                        "Number"
+                                    ],
+                                    "head": "call"
+                                }
+                            ],
+                            "head": "macrocall"
+                        },
+                        {
+                            "LINENUMBERNODE": {
+                                "line": 46,
+                                "file": "e:\\学习资料\\研究生-项目研究\\项目\\develop\\Ai4EMetaPSE.jl\\test\\julia2json.jl"
+                            }
+                        },
+                        {
+                            "args": [
+                                "x"
+                            ],
+                            "head": "return"
+                        }
+                    ],
+                    "head": "block"
+                }
+            ],
+            "head": "block"
+        }
+    ],
+    "head": "function"
+}

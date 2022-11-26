@@ -1,0 +1,1 @@
+{"args":[{"args":["f","x"],"head":"call"},{"args":[{"LINENUMBERNODE":{"line":1,"file":"none"}},{"LINENUMBERNODE":{"line":2,"file":"none"}},{"args":["x",{"args":["+","x",1],"head":"call"}],"head":"="},{"LINENUMBERNODE":{"line":3,"file":"none"}},{"args":["x",3],"head":"*="},{"LINENUMBERNODE":{"line":4,"file":"none"}},{"args":["x",2],"head":"-="}],"head":"block"}],"head":"function"}
