@@ -36,19 +36,26 @@ for (structName, datatype) in MetaStructs
     eval(s)
 end
 
-function structTypes(datatype::DataType)
-    if datatype <: Vector
-        return :ArrayType
-    elseif datatype <: String
-        return :StringType
-    elseif datatype <: Dict
-        return :DictType
-    elseif datatype <: Number
-        return :NumberType
-    else
-        return :NullType
-    end
-end
+# function structTypes(datatype::DataType)
+#     if datatype <: Vector
+#         return :ArrayType
+#     elseif datatype <: String
+#         return :StringType
+#     elseif datatype <: Dict
+#         return :DictType
+#     elseif datatype <: Number
+#         return :NumberType
+#     else
+#         return :NullType
+#     end
+# end
+
+function structTypes() end
+structTypes(::Type{<:Vector}) = :ArrayType
+structTypes(::Type{<:String}) = :StringType
+structTypes(::Type{<:Dict}) = :DictType
+structTypes(::Type{<:Number}) = :NumberType
+structTypes(::Type{<:Union{}}) = :NullType
 
 for (structName, datatype) in MetaStructs
     s = quote
