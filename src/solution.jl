@@ -91,9 +91,9 @@ end
 
 function (f::MetaTimespan)(solution::MetaSolution)
     ex = :(())
-    append!(ex.args, getproperty(f, :timespan))
+    append!(ex.args, getproperty(f, :timespan)[1:2])
     ex = Expr(:(=), :timespan, ex)
-    push!(solution.script.args, ex)
+    push!(solution.script.args, ex, :(saveat = $(getproperty(f, :timespan)[3])))
     return (ex, solution)
 end
 
@@ -106,7 +106,7 @@ end
 
 function solversExpr(f::MetaSolver, jm::ModelJson)
     model = Expr(:(=), :Model, :(compose(ODESystem(eqs, t; name=:Model), components; name=:system)))
-    ex = :(ODEProblem(structural_simplify(Model), init, timespan,saveat=abs(timespan[2]-timespan[1])/100))
+    ex = :(ODEProblem(structural_simplify(Model), init, timespan, saveat=abs(timespan[2] - timespan[1]) / 100))
     ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
     name = jm.name
     return [model, Expr(:(=), name(jm), ex)]

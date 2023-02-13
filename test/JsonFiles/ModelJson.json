@@ -296,6 +296,7 @@
     "u0": [],
     "timespan": [
         0,
+        0,
         0
     ],
     "solver": "Rosenbrock23"
