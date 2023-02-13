@@ -30,7 +30,7 @@ str = """{
         "y => 2.0",
         "z => 3.0"
     ],
-    "timespan": [0,1],
+    "timespan": [0,1,0.1],
     "solver": "Rosenbrock23"
 }"""
 solution = generatecode(str, CommonJson())
@@ -390,6 +390,7 @@ str = """{
     ],
     "u0": [],
     "timespan": [
+        0,
         0,
         0
     ],
