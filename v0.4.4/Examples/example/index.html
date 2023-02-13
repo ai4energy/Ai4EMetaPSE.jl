@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Differential Equations Json Examples · Ai4EMetaPSE.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://ai4energy.github.io/Ai4EMetaPSE.jl/Examples/example/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.svg" alt="Ai4EMetaPSE.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Ai4EMetaPSE.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li class="is-active"><a class="tocitem" href>Differential Equations Json Examples</a><ul class="internal"><li><a class="tocitem" href="#CommonJson"><span>CommonJson</span></a></li><li><a class="tocitem" href="#ModelJson"><span>ModelJson</span></a></li><li><a class="tocitem" href="#ComponentsJson"><span>ComponentsJson</span></a></li></ul></li><li><a class="tocitem" href="../julia2json/">julia2json Examples</a></li></ul></li><li><a class="tocitem" href="../../API/api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Differential Equations Json Examples</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Differential Equations Json Examples</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/ai4energy/Ai4EMetaPSE.jl/blob/main/docs/src/Examples/example.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Differential-Equations-Json-Examples"><a class="docs-heading-anchor" href="#Differential-Equations-Json-Examples">Differential Equations Json Examples</a><a id="Differential-Equations-Json-Examples-1"></a><a class="docs-heading-anchor-permalink" href="#Differential-Equations-Json-Examples" title="Permalink"></a></h1><h2 id="CommonJson"><a class="docs-heading-anchor" href="#CommonJson">CommonJson</a><a id="CommonJson-1"></a><a class="docs-heading-anchor-permalink" href="#CommonJson" title="Permalink"></a></h2><pre><code class="language-julia hljs">using Ai4EMetaPSE
+str = &quot;&quot;&quot;{
+    &quot;name&quot;: &quot;Name&quot;,
+    &quot;pkgs&quot;: [
+        &quot;ModelingToolkit&quot;,
+        &quot;DifferentialEquations&quot;
+    ],
+    &quot;variables&quot;: [
+        &quot;x(t) = 1.0&quot;,
+        &quot;y(t) = 1.0&quot;,
+        &quot;z(t) = 2.0&quot;
+    ],
+    &quot;parameters&quot;: [
+        &quot;σ = 1.0&quot;,
+        &quot;ρ = 3.0&quot;,
+        &quot;β = 5.0&quot; 
+    ],
+    &quot;equations&quot;: [
+        &quot;der(x) = σ*(y - x)&quot;,
+        &quot;der(y) = x*(ρ - z) - y&quot;,
+        &quot;der(z) = x*y - β*z&quot;
+    ],
+    &quot;u0&quot;: [
+        &quot;x =&gt; 1.0&quot;,
+        &quot;y =&gt; 2.0&quot;,
+        &quot;z =&gt; 3.0&quot;
+    ],
+    &quot;timespan&quot;: [0,1,0.1],
+    &quot;solver&quot;: &quot;Rosenbrock23&quot;
+}&quot;&quot;&quot;
+solution = generatecode(str, CommonJson())</code></pre><p>The generated codes are:</p><pre><code class="language-julia hljs">quote
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:64 =#
+    using Pkg
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:65 =#
+    pkgNeeds = [&quot;ModelingToolkit&quot;, &quot;DifferentialEquations&quot;]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:66 =#
+    alreadyGet = keys((Pkg.project()).dependencies)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:67 =#
+    toAdd = [package for package = pkgNeeds if package ∉ alreadyGet]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:68 =#
+    if isempty(toAdd)
+        nothing
+    else
+        Pkg.add(toAdd)
+    end
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:69 =#
+    using ModelingToolkit, DifferentialEquations
+    #= none:1 =# @variables begin
+            t
+            x(t) = begin
+                    #= none:1 =#
+                    1.0
+                end
+            y(t) = begin
+                    #= none:1 =#
+                    1.0
+                end
+            z(t) = begin
+                    #= none:1 =#
+                    2.0
+                end
+        end
+    #= none:1 =# @parameters begin
+            σ = 1.0
+            ρ = 3.0
+            β = 5.0
+        end
+    begin
+        der = Differential(t)
+        eqs = []
+        append!(eqs, [der(x) ~ σ * (y - x)])
+        append!(eqs, [der(y) ~ x * (ρ - z) - y])
+        append!(eqs, [der(z) ~ x * y - β * z])
+    end
+    init = Dict(x =&gt; 1.0, y =&gt; 2.0, z =&gt; 3.0)
+    timespan = (0.0, 1.0)
+    Name = solve(ODEProblem(structural_simplify(ODESystem(eqs, t; name = :Model)), init, timespan), Rosenbrock23())
+end</code></pre><h2 id="ModelJson"><a class="docs-heading-anchor" href="#ModelJson">ModelJson</a><a id="ModelJson-1"></a><a class="docs-heading-anchor-permalink" href="#ModelJson" title="Permalink"></a></h2><pre><code class="language-julia hljs">using Ai4EMetaPSE
+str = &quot;&quot;&quot;{
+    &quot;name&quot;: &quot;Project Name&quot;,
+    &quot;pkgs&quot;: [
+        &quot;ModelingToolkit&quot;,
+        &quot;DifferentialEquations&quot;,
+        &quot;Ai4EComponentLib.IncompressiblePipe&quot;
+    ],
+    &quot;components&quot;: [
+        {
+            &quot;name&quot;: &quot;Pump&quot;,
+            &quot;type&quot;: &quot;CentrifugalPump&quot;,
+            &quot;args&quot;: {
+                &quot;ω&quot;: 5000
+            }
+        },
+        {
+            &quot;name&quot;: &quot;A&quot;,
+            &quot;type&quot;: &quot;Sink_P&quot;,
+            &quot;args&quot;: {}
+        },
+        {
+            &quot;name&quot;: &quot;B&quot;,
+            &quot;type&quot;: &quot;Sink_P&quot;,
+            &quot;args&quot;: {}
+        },
+        {
+            &quot;name&quot;: &quot;Pipe1&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe2&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe3&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe4&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 9.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe5&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 5.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe6&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 4.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe7&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 5.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe8&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe9&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 10.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe10&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe11&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe12&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe13&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe14&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe15&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe16&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe17&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe18&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe19&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 6.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe20&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe21&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 1.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe22&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 7.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe23&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe24&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 3.0
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Pipe25&quot;,
+            &quot;type&quot;: &quot;SimplePipe&quot;,
+            &quot;args&quot;: {
+                &quot;L&quot;: 2.0
+            }
+        }
+    ],
+    &quot;connections&quot;: [
+        [
+            &quot;A.port&quot;,
+            &quot;Pump.in&quot;
+        ],
+        [
+            &quot;Pump.out&quot;,
+            &quot;Pipe1.in&quot;
+        ],
+        [
+            &quot;Pipe1.out&quot;,
+            &quot;Pipe2.in&quot;,
+            &quot;Pipe5.in&quot;
+        ],
+        [
+            &quot;Pipe2.out&quot;,
+            &quot;Pipe3.in&quot;,
+            &quot;Pipe6.in&quot;
+        ],
+        [
+            &quot;Pipe3.out&quot;,
+            &quot;Pipe4.in&quot;,
+            &quot;Pipe7.in&quot;
+        ],
+        [
+            &quot;Pipe4.out&quot;,
+            &quot;Pipe10.out&quot;,
+            &quot;Pipe14.in&quot;
+        ],
+        [
+            &quot;Pipe5.out&quot;,
+            &quot;Pipe11.in&quot;,
+            &quot;Pipe12.in&quot;
+        ],
+        [
+            &quot;Pipe6.out&quot;,
+            &quot;Pipe8.in&quot;,
+            &quot;Pipe9.in&quot;
+        ],
+        [
+            &quot;Pipe7.out&quot;,
+            &quot;Pipe9.out&quot;,
+            &quot;Pipe10.in&quot;
+        ],
+        [
+            &quot;Pipe12.out&quot;,
+            &quot;Pipe8.out&quot;,
+            &quot;Pipe13.in&quot;
+        ],
+        [
+            &quot;Pipe13.out&quot;,
+            &quot;Pipe14.out&quot;,
+            &quot;Pipe15.in&quot;
+        ],
+        [
+            &quot;Pipe11.out&quot;,
+            &quot;Pipe19.in&quot;,
+            &quot;Pipe16.in&quot;
+        ],
+        [
+            &quot;Pipe16.out&quot;,
+            &quot;Pipe17.in&quot;,
+            &quot;Pipe20.in&quot;
+        ],
+        [
+            &quot;Pipe17.out&quot;,
+            &quot;Pipe18.in&quot;,
+            &quot;Pipe21.in&quot;
+        ],
+        [
+            &quot;Pipe18.out&quot;,
+            &quot;Pipe15.out&quot;,
+            &quot;Pipe22.in&quot;
+        ],
+        [
+            &quot;Pipe19.out&quot;,
+            &quot;Pipe20.out&quot;,
+            &quot;Pipe23.in&quot;
+        ],
+        [
+            &quot;Pipe21.out&quot;,
+            &quot;Pipe22.out&quot;,
+            &quot;Pipe24.in&quot;
+        ],
+        [
+            &quot;Pipe23.out&quot;,
+            &quot;Pipe24.out&quot;,
+            &quot;Pipe25.in&quot;
+        ],
+        [
+            &quot;B.port&quot;,
+            &quot;Pipe25.out&quot;
+        ]
+    ],
+    &quot;u0&quot;: [],
+    &quot;timespan&quot;: [
+        0,
+        0,
+        0
+    ],
+    &quot;solver&quot;: &quot;Rosenbrock23&quot;
+}&quot;&quot;&quot;
+solution = generatecode(str, ModelJson())</code></pre><p>The generated codes are:</p><pre><code class="language-julia hljs">quote
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:64 =#
+    using Pkg
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:65 =#
+    pkgNeeds = [&quot;ModelingToolkit&quot;, &quot;DifferentialEquations&quot;, &quot;Ai4EComponentLib&quot;]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:66 =#
+    alreadyGet = keys((Pkg.project()).dependencies)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:67 =#
+    toAdd = [package for package = pkgNeeds if package ∉ alreadyGet]
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:68 =#
+    if isempty(toAdd)
+        nothing
+    else
+        Pkg.add(toAdd)
+    end
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:69 =#
+    using ModelingToolkit, DifferentialEquations, Ai4EComponentLib.IncompressiblePipe
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pump = CentrifugalPump(ω = 5000)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named A = Sink_P()
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named B = Sink_P()
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe1 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe2 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe3 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe4 = SimplePipe(L = 9)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe5 = SimplePipe(L = 5)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe6 = SimplePipe(L = 4)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe7 = SimplePipe(L = 5)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe8 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe9 = SimplePipe(L = 10)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe10 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe11 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe12 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe13 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe14 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe15 = SimplePipe(L = 2)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe16 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe17 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe18 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe19 = SimplePipe(L = 6)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe20 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe21 = SimplePipe(L = 1)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe22 = SimplePipe(L = 7)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe23 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe24 = SimplePipe(L = 3)
+    #= d:\postgraduate\project\develop\Ai4EMetaPSE.jl\src\solution.jl:120 =# @named Pipe25 = SimplePipe(L = 2)
+    components = [Pump, A, B, Pipe1, Pipe2, Pipe3, Pipe4, Pipe5, Pipe6, Pipe7, Pipe8, Pipe9, Pipe10, Pipe11, Pipe12, Pipe13, Pipe14, Pipe15, Pipe16, Pipe17, Pipe18, Pipe19, Pipe20, Pipe21, Pipe22, Pipe23, Pipe24, Pipe25]
+    eqs = [connect(A.port, Pump.in), connect(Pump.out, Pipe1.in), connect(Pipe1.out, Pipe2.in, Pipe5.in), connect(Pipe2.out, Pipe3.in, Pipe6.in), connect(Pipe3.out, Pipe4.in, Pipe7.in), connect(Pipe4.out, Pipe10.out, Pipe14.in), connect(Pipe5.out, Pipe11.in, Pipe12.in), connect(Pipe6.out, Pipe8.in, Pipe9.in), connect(Pipe7.out, Pipe9.out, Pipe10.in), connect(Pipe12.out, Pipe8.out, Pipe13.in), connect(Pipe13.out, Pipe14.out, Pipe15.in), connect(Pipe11.out, Pipe19.in, Pipe16.in), connect(Pipe16.out, Pipe17.in, Pipe20.in), connect(Pipe17.out, Pipe18.in, Pipe21.in), connect(Pipe18.out, Pipe15.out, Pipe22.in), connect(Pipe19.out, Pipe20.out, Pipe23.in), connect(Pipe21.out, Pipe22.out, Pipe24.in), connect(Pipe23.out, Pipe24.out, Pipe25.in), connect(B.port, Pipe25.out)]
+    init = Dict()
+    timespan = (0.0, 0.0)
+    Project_Name = solve(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name = :Model), components; name = :system)), init, timespan), Rosenbrock23())
+end</code></pre><h2 id="ComponentsJson"><a class="docs-heading-anchor" href="#ComponentsJson">ComponentsJson</a><a id="ComponentsJson-1"></a><a class="docs-heading-anchor-permalink" href="#ComponentsJson" title="Permalink"></a></h2><pre><code class="language-julia hljs">using Ai4EMetaPSE
+str = &quot;&quot;&quot;{
+    &quot;name&quot;:&quot;TransitionPipe&quot;,
+    &quot;args&quot;:[
+        &quot;λ1=1.0&quot;,
+        &quot;λ2=1.0&quot;,
+        &quot;λ3=1.0&quot;, 
+        &quot;n=10&quot;, 
+        &quot;f=0.016&quot;, 
+        &quot;D=0.2&quot;, 
+        &quot;L=100&quot;, 
+        &quot;T=300&quot;, 
+        &quot;pins=0.56e6&quot;, 
+        &quot;pouts=0.56e6&quot;
+    ], 
+    &quot;custom_Code&quot;:[
+        &quot;RT = 287.11 * T&quot;,
+        &quot;A0 = pi / 4 * D^2&quot;,
+        &quot;c10 = RT / A0&quot;,
+        &quot;c20 = c10 * f / 2 / D&quot;,
+        &quot;dx=L/n&quot;,
+        &quot;qms = sqrt(abs(pins^2 - pouts^2) / (f * L * RT / D / A0 / A0))&quot;,
+        &quot;pms = map(i-&gt;sqrt(pins^2 * (1 - (i-1) / n) + pouts^2 * (i-1) / n),1:n+1)&quot;
+    ],
+    &quot;components&quot;:[
+        {
+            &quot;name&quot;: &quot;inlet&quot;,
+            &quot;type&quot;: &quot;FlowPort&quot;,
+            &quot;args&quot;: {
+                &quot;T&quot;: 300
+            }
+        },
+        {
+            &quot;name&quot;: &quot;outlet&quot;,
+            &quot;type&quot;: &quot;FlowPort&quot;,
+            &quot;args&quot;: {
+                &quot;T&quot;: 300
+            }
+        }
+    ],
+    &quot;variablesInclude&quot;:[],
+    &quot;variables&quot;: [
+        &quot;qm[1:n](t)=qms&quot;,
+        &quot;p[1:n+1](t)=pms&quot;
+    ],
+    &quot;parameters&quot;: [
+        &quot;A = A0*λ2&quot;,
+        &quot;c1 = c10*λ1&quot;,
+        &quot;c2 = c20*λ3&quot;,
+        &quot;dx = L / n&quot;,
+        &quot;f = f&quot;
+    ],
+    &quot;equations&quot;: [
+        &quot;[der(p[i]) = c1 * (qm[i-1] - qm[i]) / dx for i = 2:n]&quot;,
+        &quot;[der(qm[i]) = (c1 * qm[i]^2 / (0.5 * (p[i+1] + p[i]))^2 - A) * (p[i+1] - p[i]) / dx + c1 * qm[i] / (0.5 * (p[i+1] + p[i])) * (qm[i-1] - qm[i+1]) / dx - c2 * qm[i] * abs(qm[i]) / (0.5 * (p[i+1] + p[i])) for i = 2:n-1]&quot;,
+        &quot;p[1] = inlet.p&quot;,
+        &quot;p[n+1] = outlet.p&quot;,
+        &quot;qm[n] = -outlet.qm&quot;,
+        &quot;qm[1] = inlet.qm&quot;,
+        &quot;der(qm[1]) = (c1 * qm[1]^2 / (0.5 * (p[2] + p[1]))^2 - A) * (p[2] - p[1]) / dx + c1 * qm[1] / (0.5 * (p[2] + p[1])) * (3 * qm[1] - 4 * qm[2] + qm[3]) / dx - c2 * qm[1] * abs(qm[1]) / (0.5 * (p[2] + p[1]))&quot;,
+        &quot;der(qm[n]) = (c1 * qm[n]^2 / (0.5 * (p[n+1] + p[n]))^2 - A) * (p[n+1] - p[n]) / dx + c1 * qm[n] / (0.5 * (p[n+1] + p[n])) * (-3 * qm[n] + 4 * qm[n-1] - qm[n-2]) / dx - c2 * qm[n] * abs(qm[n]) / (0.5 * (p[n+1] + p[n]))&quot;
+    ]
+}&quot;&quot;&quot;
+solution = generatecode(str, ComponentsJson())</code></pre><p>The generated codes are:</p><pre><code class="language-julia hljs">function TransitionPipe(; name, λ1 = 1.0, λ2 = 1.0, λ3 = 1.0, n = 10, f = 0.016, D = 0.2, L = 100, T = 300, pins = 560000.0, pouts = 560000.0)
+    begin
+        RT = 287.11T
+        A0 = (pi / 4) * D ^ 2
+        c10 = RT / A0
+        c20 = ((c10 * f) / 2) / D
+        dx = L / n
+        qms = sqrt(abs(pins ^ 2 - pouts ^ 2) / ((((f * L * RT) / D) / A0) / A0))
+        pms = map((i-&gt;begin
+                        #= none:1 =#
+                        sqrt(pins ^ 2 * (1 - (i - 1) / n) + (pouts ^ 2 * (i - 1)) / n)
+                    end), 1:n + 1)
+    end
+    #= c:\Users\A\Desktop\git\Ai4EMetaPSE.jl\src\solution.jl:127 =# @named inlet = FlowPort(T = 300)
+    #= c:\Users\A\Desktop\git\Ai4EMetaPSE.jl\src\solution.jl:127 =# @named outlet = FlowPort(T = 300)
+    components = [inlet, outlet]
+    #= none:1 =# @variables begin
+            t
+            (qm[1:n])(t) = begin
+                    #= none:1 =#
+                    qms
+                end
+            (p[1:n + 1])(t) = begin
+                    #= none:1 =#
+                    pms
+                end
+        end
+    #= none:1 =# @parameters begin
+            A = A0 * λ2
+            c1 = c10 * λ1
+            c2 = c20 * λ3
+            dx = L / n
+            f = f
+        end
+    begin
+        der = Differential(t)
+        eqs = []
+        append!(eqs, [[der(p[i]) ~ (c1 * (qm[i - 1] - qm[i])) / dx for i = 2:n]])
+        append!(eqs, [[der(qm[i]) ~ ((((c1 * qm[i] ^ 2) / (0.5 * (p[i + 1] + p[i])) ^ 2 - A) * (p[i + 1] - p[i])) / dx + (((c1 * qm[i]) / (0.5 * (p[i + 1] + p[i]))) * (qm[i - 1] - qm[i + 1])) / dx) - (c2 * qm[i] * abs(qm[i])) / (0.5 * (p[i + 1] + p[i])) for i = 2:n - 1]])
+        append!(eqs, [p[1] ~ inlet.p])
+        append!(eqs, [p[n + 1] ~ outlet.p])
+        append!(eqs, [qm[n] ~ -(outlet.qm)])
+        append!(eqs, [qm[1] ~ inlet.qm])
+        append!(eqs, [der(qm[1]) ~ ((((c1 * qm[1] ^ 2) / (0.5 * (p[2] + p[1])) ^ 2 - A) * (p[2] - p[1])) / dx + (((c1 * qm[1]) / (0.5 * (p[2] + p[1]))) * ((3 * qm[1] - 4 * qm[2]) + qm[3])) / dx) - (c2 * qm[1] * abs(qm[1])) / (0.5 * (p[2] + p[1]))])
+        append!(eqs, [der(qm[n]) ~ ((((c1 * qm[n] ^ 2) / (0.5 * (p[n + 1] + p[n])) ^ 2 - A) * (p[n + 1] - p[n])) / dx + (((c1 * qm[n]) / (0.5 * (p[n + 1] + p[n]))) * ((-3 * qm[n] + 4 * qm[n - 1]) - qm[n - 2])) / dx) - (c2 * qm[n] * abs(qm[n])) / (0.5 * (p[n + 1] + p[n]))])
+        compose(ODESystem(eqs, t, sts, ps; name = name), components)
+    end
+end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../">« Home</a><a class="docs-footer-nextpage" href="../julia2json/">julia2json Examples »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Monday 13 February 2023 03:15">Monday 13 February 2023</span>. Using Julia version 1.8.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
