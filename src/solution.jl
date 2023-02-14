@@ -44,10 +44,10 @@ function (f::MetaEquations)(solution::MetaSolution)
     push!(solution.script.args, ex)
     push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在初始化模型！",progress="none")"""))
     if typeof(solution.jm) == ComponentsJson
-        lastex = :(compose(ODESystem(eqs, t, sts, ps; name = name),components))
-        push!(ex.args,lastex)
+        lastex = :(compose(ODESystem(eqs, t, sts, ps; name=name), components))
+        push!(ex.args, lastex)
         solution.script.args[length(solution.script.args)] = ex
-        push!(func_script.args,solution.script)
+        push!(func_script.args, solution.script)
         solution.script = func_script
     end
     return (ex, solution)
@@ -94,9 +94,9 @@ end
 
 function (f::MetaTimespan)(solution::MetaSolution)
     ex = :(())
-    append!(ex.args, getproperty(f, :timespan))
+    append!(ex.args, getproperty(f, :timespan)[1:2])
     ex = Expr(:(=), :timespan, ex)
-    push!(solution.script.args, ex)
+    push!(solution.script.args, ex, :(saveat = $(getproperty(f, :timespan)[3])))
     push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在简化模型！",progress="none")"""))
     return (ex, solution)
 end
@@ -105,19 +105,20 @@ function solversExpr(f::MetaSolver, jm::CommonJson)
     ex = :(ODEProblem(structural_simplify(ODESystem(eqs, t; name=:Model)), init, timespan))
     ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
     name = jm.name
-    return Expr(:(=), name(jm), ex)
+    return [Expr(:(=), name(jm), ex)]
 end
 
 function solversExpr(f::MetaSolver, jm::ModelJson)
-    ex = :(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name=:Model), components; name=:system)), init, timespan,progress = true,progress_steps = 10))
+    model = Expr(:(=), :Model, :(compose(ODESystem(eqs, t; name=:Model), components; name=:system)),progress = true,progress_steps = 10)
+    ex = :(ODEProblem(structural_simplify(Model), init, timespan, saveat=abs(timespan[2] - timespan[1]) / 100))
     ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
     name = jm.name
-    return Expr(:(=), name(jm), ex)
+    return [model, Expr(:(=), name(jm), ex)]
 end
 
 function (f::MetaSolver)(solution::MetaSolution)
     ex = solversExpr(f, solution.jm)
-    push!(solution.script.args, ex)
+    push!(solution.script.args, ex...)
     push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "计算完成！",progress="done")"""))
     return (ex, solution)
 end
@@ -151,12 +152,12 @@ function (f::MetaArgs)(solution::MetaSolution)
     global func_script = Expr(:function)
     ex = Expr(:call)
     name = solution.jm.name(solution.jm)
-    push!(ex.args,name)
-    args = Expr(:parameters,:name)
+    push!(ex.args, name)
+    args = Expr(:parameters, :name)
     for arg in getproperty(f, :args)
-        push!(args.args,Expr(:kw,map(x -> Meta.parse(x), split(arg, "="))...))
+        push!(args.args, Expr(:kw, map(x -> Meta.parse(x), split(arg, "="))...))
     end
-    push!(ex.args,args)
+    push!(ex.args, args)
     push!(func_script.args, ex)
     return (ex, func_script)
 end
@@ -164,7 +165,7 @@ end
 function (f::MetaCustom_Code)(solution::MetaSolution)
     ex = Expr(:block)
     for code in getproperty(f, :custom_code)
-        push!(ex.args,Meta.parse(code))
+        push!(ex.args, Meta.parse(code))
     end
     push!(solution.script.args, ex)
     return (ex, solution)
@@ -176,7 +177,7 @@ function (f::MetaVariablesInclude)(solution::MetaSolution)
         var = :(@unpack $(Meta.parse(VariablesInclude)))
         push!(ex.args, var)
     end
-    push!(solution.script.args,ex.args...)
+    push!(solution.script.args, ex.args...)
     return (ex, solution)
 end
 

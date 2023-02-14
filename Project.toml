@@ -1,7 +1,7 @@
 name = "Ai4EMetaPSE"
 uuid = "79c54b7b-7c25-4843-921b-9653a3bc153e"
 authors = ["jake484 <522432938@qq.com> and contributors"]
-version = "0.4.0"
+version = "0.4.4"
 
 [deps]
 Ai4EComponentLib = "9901752a-13b3-47c7-8fb4-ce17182539d9"
