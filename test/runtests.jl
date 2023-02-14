@@ -9,3 +9,5 @@ using JSON3
 @safetestset "solution" begin include("solution.jl") end
 
 @safetestset "juli2json" begin include("julia2json.jl") end
+
+@safetestset "logger_test" begin include("logger_test.jl") end

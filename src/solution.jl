@@ -70,12 +70,12 @@ function (f::MetaPkgs)(solution::MetaSolution)
         push!(usings.args, Expr(:., map(x -> Symbol(x), split(pkg, "."))...))
     end
     ex = quote
-        using Pkg
-        pkgNeeds = $(map(x -> earseSubModule(x), getpro(f)))
-        alreadyGet = keys(Pkg.project().dependencies)
-        toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
-        isempty(toAdd) ? nothing : Pkg.add(toAdd)
-        $(usings)
+        # using Pkg
+        # pkgNeeds = $(map(x -> earseSubModule(x), getpro(f)))
+        # alreadyGet = keys(Pkg.project().dependencies)
+        # toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
+        # isempty(toAdd) ? nothing : Pkg.add(toAdd)
+        # $(usings)
     end
     push!(solution.script.args, ex.args...)
     push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在构建数学模型！",progress="none")"""))
