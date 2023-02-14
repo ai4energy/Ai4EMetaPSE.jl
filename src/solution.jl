@@ -109,9 +109,9 @@ function solversExpr(f::MetaSolver, jm::CommonJson)
 end
 
 function solversExpr(f::MetaSolver, jm::ModelJson)
-    model = Expr(:(=), :Model, :(compose(ODESystem(eqs, t; name=:Model), components; name=:system)),progress = true,progress_steps = 10)
+    model = Expr(:(=), :Model, :(compose(ODESystem(eqs, t; name=:Model), components; name=:system)))
     ex = :(ODEProblem(structural_simplify(Model), init, timespan, saveat=abs(timespan[2] - timespan[1]) / 100))
-    ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
+    ex = isempty(getproperty(f, :solver)) ? :(solve($(ex),progress = true,progress_steps = 10)) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))(),progress = true,progress_steps = 10))
     name = jm.name
     return [model, Expr(:(=), name(jm), ex)]
 end
