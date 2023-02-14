@@ -42,6 +42,7 @@ function (f::MetaEquations)(solution::MetaSolution)
         push!(ex.args, :(append!(eqs, $(vect_ex))))
     end
     push!(solution.script.args, ex)
+    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在初始化模型！",progress="none")"""))
     if typeof(solution.jm) == ComponentsJson
         lastex = :(compose(ODESystem(eqs, t, sts, ps; name = name),components))
         push!(ex.args,lastex)
@@ -63,6 +64,7 @@ function earseSubModule(modulename::String)
 end
 
 function (f::MetaPkgs)(solution::MetaSolution)
+    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在加载科学计算库！",progress="none")"""))
     usings = Expr(:using)
     for pkg in getpro(f)
         push!(usings.args, Expr(:., map(x -> Symbol(x), split(pkg, "."))...))
@@ -76,6 +78,7 @@ function (f::MetaPkgs)(solution::MetaSolution)
         $(usings)
     end
     push!(solution.script.args, ex.args...)
+    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在构建数学模型！",progress="none")"""))
     return (ex, solution)
 end
 
@@ -94,6 +97,7 @@ function (f::MetaTimespan)(solution::MetaSolution)
     append!(ex.args, getproperty(f, :timespan))
     ex = Expr(:(=), :timespan, ex)
     push!(solution.script.args, ex)
+    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在简化模型！",progress="none")"""))
     return (ex, solution)
 end
 
@@ -105,7 +109,7 @@ function solversExpr(f::MetaSolver, jm::CommonJson)
 end
 
 function solversExpr(f::MetaSolver, jm::ModelJson)
-    ex = :(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name=:Model), components; name=:system)), init, timespan))
+    ex = :(ODEProblem(structural_simplify(compose(ODESystem(eqs, t; name=:Model), components; name=:system)), init, timespan,progress = true,progress_steps = 10))
     ex = isempty(getproperty(f, :solver)) ? :(solve($(ex))) : :(solve($(ex), $(Symbol(getproperty(f, :solver)))()))
     name = jm.name
     return Expr(:(=), name(jm), ex)
@@ -114,6 +118,7 @@ end
 function (f::MetaSolver)(solution::MetaSolution)
     ex = solversExpr(f, solution.jm)
     push!(solution.script.args, ex)
+    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "计算完成！",progress="done")"""))
     return (ex, solution)
 end
 
