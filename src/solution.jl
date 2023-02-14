@@ -75,7 +75,7 @@ function (f::MetaPkgs)(solution::MetaSolution)
         # alreadyGet = keys(Pkg.project().dependencies)
         # toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
         # isempty(toAdd) ? nothing : Pkg.add(toAdd)
-        # $(usings)
+        $(usings)
     end
     push!(solution.script.args, ex.args...)
     push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "正在构建数学模型！",progress="none")"""))
