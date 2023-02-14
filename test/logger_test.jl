@@ -103,7 +103,7 @@ using JSON
 replace(JSON.parse(a)["name"], " " => "_")
 s = Ai4EMetaPSE.getscript(generatecode(a, ModelJson()))
 using ModelingToolkit,Ai4EComponentLib.Electrochemistry
+using ModelingToolkit
 import Ai4EComponentLib.t
 eval(s)
 typeof(s)
-using ModelingToolkit

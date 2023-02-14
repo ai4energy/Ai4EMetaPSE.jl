@@ -70,11 +70,11 @@ function (f::MetaPkgs)(solution::MetaSolution)
         push!(usings.args, Expr(:., map(x -> Symbol(x), split(pkg, "."))...))
     end
     ex = quote
-        using Pkg
-        pkgNeeds = $(map(x -> earseSubModule(x), getpro(f)))
-        alreadyGet = keys(Pkg.project().dependencies)
-        toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
-        isempty(toAdd) ? nothing : Pkg.add(toAdd)
+        # using Pkg
+        # pkgNeeds = $(map(x -> earseSubModule(x), getpro(f)))
+        # alreadyGet = keys(Pkg.project().dependencies)
+        # toAdd = [package for package in pkgNeeds if package ∉ alreadyGet]
+        # isempty(toAdd) ? nothing : Pkg.add(toAdd)
         $(usings)
     end
     push!(solution.script.args, ex.args...)

@@ -1,14 +1,11 @@
 name = "Ai4EMetaPSE"
 uuid = "79c54b7b-7c25-4843-921b-9653a3bc153e"
 authors = ["jake484 <522432938@qq.com> and contributors"]
-version = "0.4.4"
+version = "0.4.5"
 
 [deps]
-Ai4EComponentLib = "9901752a-13b3-47c7-8fb4-ce17182539d9"
-DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
-ModelingToolkit = "961ee093-0014-501f-94e3-6117800e7a78"
 SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
 StructTypes = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
 
@@ -20,7 +17,11 @@ StructTypes = "1"
 julia = "1.7"
 
 [extras]
+Ai4EComponentLib = "9901752a-13b3-47c7-8fb4-ce17182539d9"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+ModelingToolkit = "961ee093-0014-501f-94e3-6117800e7a78"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 
 [targets]
-test = ["Test"]
+test = ["Test", "Ai4EComponentLib", "DifferentialEquations", "ModelingToolkit","JSON"]
