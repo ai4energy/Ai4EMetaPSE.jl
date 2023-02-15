@@ -1,0 +1,118 @@
+{
+    "args": [
+        {
+            "args": [
+                "f",
+                "x"
+            ],
+            "head": "call"
+        },
+        {
+            "args": [
+                {
+                    "LINENUMBERNODE": {
+                        "line": 62,
+                        "file": "julia2json.md"
+                    }
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 63,
+                        "file": "julia2json.md"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        {
+                            "args": [
+                                "+",
+                                "x",
+                                1
+                            ],
+                            "head": "call"
+                        }
+                    ],
+                    "head": "="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 64,
+                        "file": "julia2json.md"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        3
+                    ],
+                    "head": "*="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 65,
+                        "file": "julia2json.md"
+                    }
+                },
+                {
+                    "args": [
+                        "x",
+                        2
+                    ],
+                    "head": "-="
+                },
+                {
+                    "LINENUMBERNODE": {
+                        "line": 66,
+                        "file": "julia2json.md"
+                    }
+                },
+                {
+                    "args": [
+                        {
+                            "LINENUMBERNODE": {
+                                "line": 67,
+                                "file": "julia2json.md"
+                            }
+                        },
+                        {
+                            "args": [
+                                "@assert",
+                                {
+                                    "LINENUMBERNODE": {
+                                        "line": 67,
+                                        "file": "julia2json.md"
+                                    }
+                                },
+                                {
+                                    "args": [
+                                        "isa",
+                                        "x",
+                                        "Number"
+                                    ],
+                                    "head": "call"
+                                }
+                            ],
+                            "head": "macrocall"
+                        },
+                        {
+                            "LINENUMBERNODE": {
+                                "line": 68,
+                                "file": "julia2json.md"
+                            }
+                        },
+                        {
+                            "args": [
+                                "x"
+                            ],
+                            "head": "return"
+                        }
+                    ],
+                    "head": "block"
+                }
+            ],
+            "head": "block"
+        }
+    ],
+    "head": "function"
+}
