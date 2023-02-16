@@ -119,7 +119,6 @@ end
 function (f::MetaSolver)(solution::MetaSolution)
     ex = solversExpr(f, solution.jm)
     push!(solution.script.args, ex...)
-    push!(solution.script.args, Meta.parse("""@logmsg(LogLevel(-1),"ODESystem",_id=:OrdinaryDiffEq,status = "计算完成！",progress="done")"""))
     return (ex, solution)
 end
 
