@@ -1,7 +1,7 @@
 name = "Ai4EMetaPSE"
 uuid = "79c54b7b-7c25-4843-921b-9653a3bc153e"
 authors = ["jake484 <522432938@qq.com> and contributors"]
-version = "0.5.0"
+version = "0.5.1"
 
 [deps]
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
