@@ -1,6 +1,6 @@
 name = "Ai4EMetaPSE"
 uuid = "79c54b7b-7c25-4843-921b-9653a3bc153e"
-authors = ["jake484 <522432938@qq.com> and contributors"]
+authors = ["ai4energy and contributors"]
 version = "0.5.1"
 
 [deps]
